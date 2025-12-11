@@ -1,0 +1,31 @@
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  color: var(--club-primary);
+  margin: 0;
+}
+
+.metodos-pago {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.puntos-generados {
+  padding: 2rem;
+}
+
+.puntos-valor {
+  display: block;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--club-accent);
+}
+
+.puntos-label {
+  display: block;
+  color: #6c757d;
+  font-size: 1.1rem;
+}

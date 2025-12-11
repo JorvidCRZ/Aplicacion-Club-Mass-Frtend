@@ -1,0 +1,16 @@
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  color: var(--club-primary);
+  margin: 0;
+}
+
+.table-responsive {
+  max-height: 420px;
+}
+
+.fs-4 {
+  font-size: 1.25rem;
+}

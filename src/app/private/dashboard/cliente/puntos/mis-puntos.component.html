@@ -1,0 +1,48 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Mis Puntos</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-club puntos-card">
+        <div class="card-body">
+          <div class="puntos-display">
+            <span class="puntos-label">Saldo actual:</span>
+            <span class="puntos-valor">{{ puntos }}</span>
+            <span class="puntos-text">puntos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card card-club">
+        <div class="card-header">
+          <i class="bi bi-exclamation-triangle"></i> Puntos por vencer
+        </div>
+        <div class="card-body text-center">
+          <p class="mb-1">Tienes <strong>{{ puntosProximosVencer }} puntos</strong> por vencer</p>
+          <p class="text-muted mb-0">Fecha de vencimiento: {{ fechaVencimiento }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card card-club">
+        <div class="card-header">
+          <i class="bi bi-info-circle"></i> ¿Cómo ganar más puntos?
+        </div>
+        <div class="card-body">
+          <ul class="tips-list">
+            <li><i class="bi bi-check-circle text-success"></i> Gana 10 puntos por cada S/1 de compra</li>
+            <li><i class="bi bi-check-circle text-success"></i> Puntos dobles en campañas especiales</li>
+            <li><i class="bi bi-check-circle text-success"></i> Bonos por cumpleaños y fechas especiales</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dashboard-layout>

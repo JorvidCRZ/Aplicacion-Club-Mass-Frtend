@@ -1,0 +1,51 @@
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  color: var(--club-primary);
+  margin: 0;
+}
+
+.puntos-display {
+  background-color: var(--club-secondary);
+  color: var(--club-white);
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.puntos-label {
+  display: block;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.puntos-valor {
+  display: block;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--club-accent);
+}
+
+.puntos-text {
+  font-size: 1.2rem;
+}
+
+.tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tips-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tips-list li:last-child {
+  border-bottom: none;
+}

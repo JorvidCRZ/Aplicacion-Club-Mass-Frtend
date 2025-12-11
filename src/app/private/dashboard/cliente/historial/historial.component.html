@@ -1,0 +1,34 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Historial de Movimientos</h2>
+  </div>
+
+  <div class="card card-club">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-club">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Tipo</th>
+              <th>Detalle</th>
+              <th class="text-end">Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of historial; track item.fecha) {
+              <tr>
+                <td>{{ item.fecha }}</td>
+                <td><span class="badge" [ngClass]="getTipoClass(item.tipo)">{{ item.tipo }}</span></td>
+                <td>{{ item.detalle }}</td>
+                <td class="text-end" [class.text-success]="item.puntos > 0" [class.text-danger]="item.puntos < 0">
+                  <strong>{{ item.puntos > 0 ? '+' : '' }}{{ item.puntos }}</strong>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</app-dashboard-layout>

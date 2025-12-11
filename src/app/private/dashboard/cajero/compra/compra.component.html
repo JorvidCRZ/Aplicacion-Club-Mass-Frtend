@@ -1,0 +1,108 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Registrar Compra</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card card-club">
+        <div class="card-header">
+          <i class="bi bi-cart-plus"></i> Nueva Compra
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Código de cliente</label>
+            <div class="input-group">
+              <input type="text" class="form-control" [(ngModel)]="codigoCliente" placeholder="Ingrese código o DNI">
+              <button class="btn btn-club-secondary" (click)="buscarCliente()">Buscar</button>
+            </div>
+          </div>
+
+          @if (clienteEncontrado) {
+            <div class="alert alert-info">
+              <strong>Cliente:</strong> {{ clienteEncontrado.nombre }}<br>
+              <strong>Puntos actuales:</strong> {{ clienteEncontrado.puntosActuales }}
+            </div>
+          }
+
+          <div class="mb-3">
+            <label class="form-label">Monto total</label>
+            <div class="input-group">
+              <span class="input-group-text">S/</span>
+              <input type="number" class="form-control" [(ngModel)]="montoTotal" (ngModelChange)="calcularPuntos()">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Método de pago</label>
+            <div class="metodos-pago">
+              @for (metodo of metodosPago; track metodo) {
+                <button 
+                  class="btn"
+                  [class.btn-club-primary]="metodoPago === metodo"
+                  [class.btn-outline-secondary]="metodoPago !== metodo"
+                  (click)="metodoPago = metodo">
+                  {{ metodo }}
+                </button>
+              }
+            </div>
+          </div>
+
+          <button class="btn btn-club-primary w-100" (click)="registrarCompra()" [disabled]="!clienteEncontrado || montoTotal <= 0">
+            <i class="bi bi-check-lg"></i> Registrar Compra
+          </button>
+          <div *ngIf="mensaje" class="alert alert-success mt-3">{{ mensaje }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card card-club mb-3">
+        <div class="card-header">
+          <i class="bi bi-calculator"></i> Cálculo de puntos
+        </div>
+        <div class="card-body text-center">
+          <div class="puntos-generados">
+            <span class="puntos-valor">{{ puntosGenerados }}</span>
+            <span class="puntos-label">Puntos generados</span>
+          </div>
+          <hr>
+          <p class="text-muted mb-0">
+            <small>Monto de compra: S/ {{ montoTotal | number:'1.2-2' }}</small><br>
+            <small>Regla: 10 puntos por cada S/1</small>
+          </p>
+        </div>
+      </div>
+      <div class="card card-club">
+        <div class="card-header">
+          <i class="bi bi-clock-history"></i> Historial de compras
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-sm mb-0">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Monto</th>
+                <th>Puntos</th>
+                <th>Método</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let compra of compras">
+                <td>{{ compra.fecha }}</td>
+                <td>{{ compra.cliente }}</td>
+                <td>S/ {{ compra.monto }}</td>
+                <td>{{ compra.puntos }}</td>
+                <td>{{ compra.metodoPago }}</td>
+                <td><button class="btn btn-sm btn-outline-danger" (click)="eliminarCompra(compra.id)"><i class="bi bi-trash"></i></button></td>
+              </tr>
+              <tr *ngIf="compras.length === 0"><td colspan="6" class="text-center text-muted">Sin compras registradas</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dashboard-layout>

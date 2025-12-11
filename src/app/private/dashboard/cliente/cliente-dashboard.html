@@ -1,0 +1,50 @@
+<app-header></app-header>
+<div class="dashboard-layout">
+  <app-sidebar></app-sidebar>
+  <div class="dashboard-content">
+    <div class="welcome-banner">
+      <div class="welcome-content">
+        <div class="role-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+            <path d="M8.93 6.588l-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.002-.252 1.223-.797.07-.162.106-.348.106-.533 0-.176-.036-.338-.106-.533l-.738-3.468c-.064-.293-.006-.399.288-.469l.45-.083.082-.38zm-2.29-.287a.5.5 0 1 1-.82-.573.5.5 0 0 1 .82.573z"/>
+          </svg>
+        </div>
+        <div class="welcome-text">
+          <h3>Bienvenido, {{ user?.username }}</h3>
+          <p>Sistema de gestión de puntos Club Mass</p>
+        </div>
+      </div>
+      <div class="role-badge">CLIENTE</div>
+    </div>
+
+    <div class="dashboard-cards">
+      <div class="dash-card" *ngFor="let card of dashboardCards" (click)="goTo(card.route)" style="cursor:pointer;">
+        <div class="card-icon" [ngStyle]="{background: card.color}">
+          <ng-container [ngSwitch]="card.icon">
+            <svg *ngSwitchCase="'cart'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M0 1a1 1 0 0 1 1-1h1.22a1 1 0 0 1 .98.8l.3 1.2H15a1 1 0 0 1 .97 1.24l-1.5 6A1 1 0 0 1 13.5 10H4.12l-.3 1.2A1 1 0 0 1 2.84 12H1a1 1 0 0 1-1-1V1zm2.22 1l1.5 6h9.78l1.2-4.8H3.42l-.2-.8zm1.28 8a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+            </svg>
+            <svg *ngSwitchCase="'info'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14.5A6.5 6.5 0 1 1 8 1.5a6.5 6.5 0 0 1 0 13z"/>
+              <path d="M8 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm0 3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3A.5.5 0 0 1 8 7z"/>
+            </svg>
+            <svg *ngSwitchCase="'history'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M3 2a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H3zm0-1h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2z"/>
+              <path d="M8 4a.5.5 0 0 1 .5.5v3.793l2.146 2.147a.5.5 0 0 1-.708.708l-2.5-2.5A.5.5 0 0 1 7.5 8V4.5A.5.5 0 0 1 8 4z"/>
+            </svg>
+            <svg *ngSwitchCase="'gift'" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M4 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4zm0-1h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2z"/>
+              <path d="M8 4a.5.5 0 0 1 .5.5v3.793l2.146 2.147a.5.5 0 0 1-.708.708l-2.5-2.5A.5.5 0 0 1 7.5 8V4.5A.5.5 0 0 1 8 4z"/>
+            </svg>
+          </ng-container>
+        </div>
+        <div class="card-info">
+          <h5>{{ card.title }}</h5>
+          <p>{{ card.description }}</p>
+        </div>
+      </div>
+    </div>
+    <app-footer></app-footer>
+  </div>
+</div>

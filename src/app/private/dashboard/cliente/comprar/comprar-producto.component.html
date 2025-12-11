@@ -1,0 +1,29 @@
+<div class="comprar-producto-layout">
+  <button class="btn-volver" (click)="volverAlDashboard()">&larr; Volver al Dashboard</button>
+  <h2>Comprar Productos</h2>
+  <div class="comprar-grid">
+    <div class="productos-lista">
+      <div class="producto-card" *ngFor="let producto of productos">
+        <h4>{{ producto.nombre }}</h4>
+        <span class="categoria">{{ producto.categoria }}</span>
+        <p>Precio: S/{{ producto.precio }}</p>
+        <p>Puntos por compra: <strong>{{ producto.puntos }}</strong></p>
+        <button (click)="agregarAlCarrito(producto)">Agregar al carrito</button>
+      </div>
+    </div>
+    <div class="carrito-resumen">
+      <h3>Carrito</h3>
+      <ng-container *ngIf="carrito.length; else vacio">
+        <ul>
+          <li *ngFor="let item of carrito">{{ item.nombre }} - S/{{ item.precio }}</li>
+        </ul>
+        <p>Total: <strong>S/{{ total }}</strong></p>
+        <p>Puntos acumulados: <strong>{{ puntosAcumulados }}</strong></p>
+        <button (click)="comprar()">Comprar</button>
+      </ng-container>
+      <ng-template #vacio>
+        <div class="vacio">Tu carrito está vacío.<br>Agrega productos para comenzar tu compra.</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Catálogo de Recompensas</h2>
+    <div class="mis-puntos-badge">
+      <i class="bi bi-coin"></i> {{ misPuntos }} puntos disponibles
+    </div>
+  </div>
+
+  <div class="row">
+    @for (premio of premios; track premio.id) {
+      <div class="col-md-3 mb-4">
+        <div class="card premio-card" [class.disabled]="!puedeCanjear(premio.puntos)">
+          <div class="premio-imagen">
+            <i class="bi bi-gift"></i>
+          </div>
+          <div class="card-body text-center">
+            <h6 class="card-title">{{ premio.nombre }}</h6>
+            <p class="puntos-requeridos">
+              Canjear por<br>
+              <strong>{{ premio.puntos }} puntos</strong>
+            </p>
+            <button 
+              class="btn btn-sm"
+              [class.btn-club-primary]="puedeCanjear(premio.puntos)"
+              [class.btn-secondary]="!puedeCanjear(premio.puntos)"
+              [disabled]="!puedeCanjear(premio.puntos)"
+              (click)="canjearPremio(premio)">
+              {{ puedeCanjear(premio.puntos) ? 'Canjear' : 'Puntos insuficientes' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</app-dashboard-layout>

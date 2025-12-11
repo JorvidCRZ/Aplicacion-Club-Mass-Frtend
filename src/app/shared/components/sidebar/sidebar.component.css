@@ -1,0 +1,101 @@
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: var(--club-primary);
+  color: var(--club-white);
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--club-secondary);
+  text-align: center;
+  background-color: var(--club-primary);
+}
+
+.sidebar-header .logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.sidebar-header .logo-icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--club-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-header h4 {
+  margin: 0;
+  font-weight: 700;
+  color: var(--club-white);
+}
+
+.sidebar-header h4 span {
+  color: var(--club-accent);
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+  overflow-y: auto;
+}
+
+.sidebar-nav .nav-link {
+  color: #a8b4d4;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  text-decoration: none;
+}
+
+.sidebar-nav .nav-link:hover {
+  color: var(--club-white);
+  background-color: var(--club-secondary);
+}
+
+.sidebar-nav .nav-link.active {
+  color: var(--club-primary);
+  background-color: var(--club-accent);
+  border-left-color: var(--club-accent);
+  font-weight: 600;
+}
+
+.sidebar-nav .nav-link i {
+  font-size: 1.1rem;
+  width: 24px;
+  text-align: center;
+}
+
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 2px solid var(--club-accent);
+}
+
+.btn-logout {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid var(--club-accent);
+  color: var(--club-accent);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-logout:hover {
+  background-color: var(--club-accent);
+  color: var(--club-primary);
+}

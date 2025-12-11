@@ -1,0 +1,59 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Consultar Puntos</h2>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="dniCliente" placeholder="DNI del cliente">
+        <button class="btn btn-club-primary" (click)="buscarCliente()">
+          <i class="bi bi-search"></i> Buscar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (cliente) {
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-club">
+          <div class="card-body">
+            <div class="puntos-display">
+              <span class="puntos-label">Saldo actual:</span>
+              <span class="puntos-valor">{{ cliente.puntos }}</span>
+              <span class="puntos-text">puntos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="card card-club">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-clock-history"></i> Historial de movimientos</span>
+            <button class="btn btn-sm btn-outline-danger" (click)="limpiarHistorial()">Limpiar</button>
+          </div>
+          <div class="card-body">
+            <div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
+            <div class="historial-list">
+              @for (item of historial; track item.fecha) {
+                <div class="historial-item">
+                  <div class="historial-info">
+                    <span class="fecha">{{ item.fecha }}</span>
+                    <span class="tipo">{{ item.tipo }}</span>
+                  </div>
+                  <div class="historial-puntos" [class.positivo]="item.puntos > 0" [class.negativo]="item.puntos < 0">
+                    {{ item.puntos > 0 ? '+' : '' }}{{ item.puntos }}
+                  </div>
+                  <a href="#" class="ver-detalles">Ver Detalles</a>
+                </div>
+              }
+              <div *ngIf="historial.length === 0" class="text-center text-muted">Sin movimientos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</app-dashboard-layout>

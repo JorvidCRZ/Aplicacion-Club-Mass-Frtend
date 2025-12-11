@@ -1,0 +1,176 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  color: var(--club-primary);
+  margin: 0;
+}
+
+.page-header .btn svg {
+  fill: currentColor;
+  margin-right: 0.5rem;
+}
+
+/* Tabla */
+.table-club tbody tr:hover {
+  background-color: rgba(13, 27, 76, 0.05);
+}
+
+.table-club td {
+  vertical-align: middle;
+}
+
+/* Botones de acción */
+.btn-outline-primary svg,
+.btn-outline-warning svg,
+.btn-outline-success svg,
+.btn-outline-danger svg {
+  fill: currentColor;
+}
+
+/* Modal */
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}
+
+.bg-club-primary {
+  background-color: var(--club-primary) !important;
+}
+
+.modal-header.bg-club-primary {
+  border-bottom: none;
+}
+
+.modal-header.bg-club-primary .modal-title {
+  font-weight: 600;
+}
+
+.form-label {
+  font-weight: 500;
+  color: var(--club-primary);
+}
+
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.invalid-feedback {
+  display: block;
+  font-size: 0.875rem;
+  color: #dc3545;
+}
+
+/* Loading */
+.spinner-border {
+  color: var(--club-primary);
+}
+
+/* Controles de tabla: búsqueda y selector de página */
+.table-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-box svg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: #666;
+}
+
+.search-box input {
+  padding-left: 40px;
+}
+
+.page-size-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.page-size-selector label {
+  color: #666;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.page-size-selector select {
+  width: auto;
+  padding: 0.375rem 2rem 0.375rem 0.75rem;
+}
+
+/* Paginación */
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.pagination-info {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pagination-buttons .btn {
+  padding: 0.375rem 0.5rem;
+}
+
+.pagination-buttons .btn svg {
+  fill: currentColor;
+}
+
+.page-indicator {
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--club-primary);
+  font-weight: 500;
+}
+
+/* Modal de detalles */
+.user-avatar {
+  width: 64px;
+  height: 64px;
+  background-color: var(--club-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-avatar svg {
+  fill: white;
+}
+
+.btn-outline-info svg {
+  fill: currentColor;
+}

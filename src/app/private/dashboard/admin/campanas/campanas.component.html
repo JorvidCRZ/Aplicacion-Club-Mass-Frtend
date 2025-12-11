@@ -1,0 +1,77 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Gestión de Campañas</h2>
+    <button class="btn btn-club-primary" (click)="agregarCampana()">
+      <i class="bi bi-plus-lg"></i> Crear Campaña
+    </button>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card card-club">
+        <div class="card-header">
+          <i class="bi bi-megaphone"></i> Crear campaña
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" [(ngModel)]="nuevaCampana.nombre" placeholder="Nombre de la campaña">
+          </div>
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label class="form-label">Fecha de</label>
+              <input type="date" class="form-control" [(ngModel)]="nuevaCampana.fechaInicio">
+            </div>
+            <div class="col-6 mb-3">
+              <label class="form-label">Fecha fin</label>
+              <input type="date" class="form-control" [(ngModel)]="nuevaCampana.fechaFin">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="nuevaCampana.descripcion"></textarea>
+          </div>
+          <button class="btn btn-club-primary" (click)="agregarCampana()">Crear</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-club">
+        <div class="card-header">
+          <i class="bi bi-calendar-check"></i> Campañas activas
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            @for (campana of campanas; track campana.id) {
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div *ngIf="campanaEditando?.id !== campana.id; else editForm">
+                  <strong>{{ campana.nombre }}</strong>
+                  <small class="d-block text-muted">{{ campana.fechaInicio }} - {{ campana.fechaFin }}</small>
+                  <div class="text-muted small">{{ campana.descripcion }}</div>
+                </div>
+                <ng-template #editForm>
+                  <input class="form-control mb-1" [(ngModel)]="campanaEditando!.nombre" />
+                  <div class="row g-1">
+                    <div class="col-6"><input class="form-control mb-1" type="date" [(ngModel)]="campanaEditando!.fechaInicio" /></div>
+                    <div class="col-6"><input class="form-control mb-1" type="date" [(ngModel)]="campanaEditando!.fechaFin" /></div>
+                  </div>
+                  <textarea class="form-control mb-1" rows="2" [(ngModel)]="campanaEditando!.descripcion"></textarea>
+                </ng-template>
+                <div>
+                  <ng-container *ngIf="campanaEditando?.id !== campana.id">
+                    <button class="btn btn-sm btn-outline-primary me-1" (click)="editarCampana(campana)">Editar</button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="eliminarCampana(campana.id)">Eliminar</button>
+                  </ng-container>
+                  <ng-container *ngIf="campanaEditando?.id === campana.id">
+                    <button class="btn btn-success btn-sm me-1" (click)="guardarEdicion()">Guardar</button>
+                    <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">Cancelar</button>
+                  </ng-container>
+                </div>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-dashboard-layout>

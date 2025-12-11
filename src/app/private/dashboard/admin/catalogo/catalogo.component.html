@@ -1,0 +1,79 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Catálogo de Recompensas</h2>
+    <button class="btn btn-club-primary" (click)="agregarPremio()">
+      <i class="bi bi-plus-lg"></i> Agregar Premio
+    </button>
+  </div>
+
+  <!-- Formulario agregar premio -->
+  <div class="card mb-4 p-3">
+    <div class="row g-2 align-items-end">
+      <div class="col-md-3">
+        <label class="form-label">Nombre</label>
+        <input class="form-control" [(ngModel)]="nuevoPremio.nombre" placeholder="Nombre del premio" />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Puntos</label>
+        <input class="form-control" type="number" [(ngModel)]="nuevoPremio.puntos" placeholder="Puntos" />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Imagen (URL)</label>
+        <input class="form-control" [(ngModel)]="nuevoPremio.imagen" placeholder="URL de imagen" />
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Disponible</label>
+        <select class="form-select" [(ngModel)]="nuevoPremio.disponible">
+          <option [ngValue]="true">Sí</option>
+          <option [ngValue]="false">No</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <button class="btn btn-success w-100" (click)="agregarPremio()">
+          <i class="bi bi-plus-lg"></i> Agregar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    @for (premio of premios; track premio.id) {
+      <div class="col-md-4 mb-4">
+        <div class="card card-club premio-card">
+          <div class="premio-imagen">
+            <img *ngIf="premio.imagen" [src]="premio.imagen" alt="Premio" style="max-width:100%;max-height:100px;" />
+            <i *ngIf="!premio.imagen" class="bi bi-gift"></i>
+          </div>
+          <div class="card-body text-center">
+            <ng-container *ngIf="premioEditando?.id !== premio.id; else editForm">
+              <h5 class="card-title">{{ premio.nombre }}</h5>
+              <p class="puntos-requeridos">
+                <span class="puntos-valor">{{ premio.puntos }}</span> puntos
+              </p>
+              <span [class]="premio.disponible ? 'badge bg-success' : 'badge bg-secondary'">
+                {{ premio.disponible ? 'Disponible' : 'No disponible' }}
+              </span>
+              <div class="mt-3">
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="editarPremio(premio)">Editar</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="eliminarPremio(premio.id)">Eliminar</button>
+              </div>
+            </ng-container>
+            <ng-template #editForm>
+              <input class="form-control mb-2" [(ngModel)]="premioEditando!.nombre" />
+              <input class="form-control mb-2" type="number" [(ngModel)]="premioEditando!.puntos" />
+              <input class="form-control mb-2" [(ngModel)]="premioEditando!.imagen" placeholder="URL de imagen" />
+              <select class="form-select mb-2" [(ngModel)]="premioEditando!.disponible">
+                <option [ngValue]="true">Disponible</option>
+                <option [ngValue]="false">No disponible</option>
+              </select>
+              <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-success btn-sm" (click)="guardarEdicion()">Guardar</button>
+                <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">Cancelar</button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</app-dashboard-layout>

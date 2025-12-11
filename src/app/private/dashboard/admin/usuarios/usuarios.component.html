@@ -1,0 +1,433 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Gestión de Usuarios</h2>
+    <button class="btn btn-club-primary" (click)="openCreateModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+      </svg>
+      Nuevo Usuario
+    </button>
+  </div>
+
+  <!-- Mensaje de error -->
+  @if (error) {
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ error }}
+      <button type="button" class="btn-close" (click)="error = ''"></button>
+    </div>
+  }
+
+  <!-- Loading -->
+  @if (loading && !showModal) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-2">Cargando usuarios...</p>
+    </div>
+  }
+
+  <!-- Tabla de usuarios -->
+  @if (!loading || showModal) {
+    <div class="card card-club">
+      <div class="card-body">
+        <!-- Barra de búsqueda y selector de página -->
+        <div class="table-controls">
+          <div class="search-box">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            <input type="text" class="form-control" placeholder="Buscar por nombre, usuario, correo, rol..." 
+                   [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()">
+          </div>
+          <div class="page-size-selector">
+            <label>Mostrar</label>
+            <select class="form-select" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()">
+              @for (size of pageSizeOptions; track size) {
+                <option [value]="size">{{ size }}</option>
+              }
+            </select>
+            <label>registros</label>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-club table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Correo</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (usuario of paginatedUsuarios; track usuario.idUsuario) {
+                <tr>
+                  <td>{{ usuario.idUsuario }}</td>
+                  <td>{{ getNombreCompleto(usuario) }}</td>
+                  <td>{{ usuario.username }}</td>
+                  <td>{{ usuario.correo }}</td>
+                  <td><span class="badge bg-secondary">{{ usuario.rol || usuario.nombreRol }}</span></td>
+                  <td>
+                    <span [class]="usuario.estado === '1' ? 'badge bg-success' : 'badge bg-danger'">
+                      {{ getEstadoTexto(usuario.estado) }}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary me-1" (click)="openDetailsModal(usuario)" title="Ver detalles">
+                      <!-- ...icono detalles... -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                      </svg>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success me-1" (click)="openEditModal(usuario)" title="Editar">
+                      <!-- ...icono editar... -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                      </svg>
+                    </button>
+                                    <button class="btn btn-sm btn-outline-warning me-1"
+                                      (click)="toggleEstado(usuario)"
+                                      [title]="usuario.estado === '1' ? 'Desactivar' : 'Activar'">
+                      <!-- ...icono activar/desactivar... -->
+                      @if (usuario.estado === '1') {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+                          <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+                          <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+                        </svg>
+                      } @else {
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                          <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
+                          <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                        </svg>
+                      }
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger" (click)="deleteUsuario(usuario)" title="Eliminar">
+                      <!-- Icono papelera -->
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M5.5 5.5A.5.5 0 0 1 6 5h4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-7zM4.118 4.5A1.5 1.5 0 0 1 5.5 3h5a1.5 1.5 0 0 1 1.382 1.5H15a.5.5 0 0 1 0 1h-1v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5.5H1a.5.5 0 0 1 0-1h1.118zM6 5v7h4V5H6z"/>
+                      </svg>
+                    </button>
+                  </td>
+                </tr>
+              } @empty {
+                <tr>
+                  <td colspan="7" class="text-center py-4">
+                    @if (searchTerm) {
+                      No se encontraron usuarios con "{{ searchTerm }}"
+                    } @else {
+                      No hay usuarios registrados
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Paginación -->
+        @if (filteredUsuarios.length > 0) {
+          <div class="pagination-controls">
+            <div class="pagination-info">
+              Mostrando {{ startRecord }} a {{ endRecord }} de {{ filteredUsuarios.length }} registros
+            </div>
+            <div class="pagination-buttons">
+              <button class="btn btn-sm btn-outline-secondary" (click)="goToPage(1)" [disabled]="currentPage === 1" title="Primera">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                  <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+              </button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="previousPage()" [disabled]="currentPage === 1" title="Anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                </svg>
+              </button>
+              <span class="page-indicator">Página {{ currentPage }} de {{ totalPages }}</span>
+              <button class="btn btn-sm btn-outline-secondary" (click)="nextPage()" [disabled]="currentPage === totalPages" title="Siguiente">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </button>
+              <button class="btn btn-sm btn-outline-secondary" (click)="goToPage(totalPages)" [disabled]="currentPage === totalPages" title="Última">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                  <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Modal Crear/Editar Usuario -->
+  @if (showModal) {
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-club-primary text-white">
+            <h5 class="modal-title">{{ isEditing ? 'Editar Usuario' : 'Nuevo Usuario' }}</h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="saveUsuario()">
+              <div class="row">
+                <!-- Nombre 1 -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Primer Nombre *</label>
+                  <input type="text" class="form-control" [(ngModel)]="usuarioForm.nombre1" name="nombre1"
+                         [class.is-invalid]="formErrors['nombre1']" placeholder="Ej: Juan">
+                  @if (formErrors['nombre1']) {
+                    <div class="invalid-feedback">{{ formErrors['nombre1'] }}</div>
+                  }
+                </div>
+                <!-- Nombre 2 -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Segundo Nombre</label>
+                  <input type="text" class="form-control" [(ngModel)]="usuarioForm.nombre2" name="nombre2"
+                         placeholder="Ej: Carlos">
+                </div>
+                <!-- Apellido Paterno -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Apellido Paterno *</label>
+                  <input type="text" class="form-control" [(ngModel)]="usuarioForm.apellidoPaterno" name="apellidoPaterno"
+                         [class.is-invalid]="formErrors['apellidoPaterno']" placeholder="Ej: Pérez">
+                  @if (formErrors['apellidoPaterno']) {
+                    <div class="invalid-feedback">{{ formErrors['apellidoPaterno'] }}</div>
+                  }
+                </div>
+                <!-- Apellido Materno -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Apellido Materno</label>
+                  <input type="text" class="form-control" [(ngModel)]="usuarioForm.apellidoMaterno" name="apellidoMaterno"
+                         placeholder="Ej: García">
+                </div>
+                <!-- Username -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Usuario *</label>
+                  <input type="text" class="form-control" [(ngModel)]="usuarioForm.username" name="username"
+                         [class.is-invalid]="formErrors['username']" placeholder="Ej: jperez">
+                  @if (formErrors['username']) {
+                    <div class="invalid-feedback">{{ formErrors['username'] }}</div>
+                  }
+                </div>
+                <!-- Correo -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Correo *</label>
+                  <input type="email" class="form-control" [(ngModel)]="usuarioForm.correo" name="correo"
+                         [class.is-invalid]="formErrors['correo']" placeholder="Ej: juan@email.com">
+                  @if (formErrors['correo']) {
+                    <div class="invalid-feedback">{{ formErrors['correo'] }}</div>
+                  }
+                </div>
+                <!-- Password -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Contraseña {{ isEditing ? '(dejar vacío para no cambiar)' : '*' }}</label>
+                  <input type="password" class="form-control" [(ngModel)]="usuarioForm.contrasena" name="password"
+                         [class.is-invalid]="formErrors['password']" placeholder="Mínimo 6 caracteres">
+                  @if (formErrors['password']) {
+                    <div class="invalid-feedback">{{ formErrors['password'] }}</div>
+                  }
+                </div>
+                <!-- Rol -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Rol *</label>
+                  <select class="form-select" [(ngModel)]="usuarioForm.rol!.nombreRol" name="rol">
+                    @for (rol of roles; track rol) {
+                      <option [value]="rol">{{ rol }}</option>
+                    }
+                  </select>
+                  @if (!isEditing) {
+                    <small class="form-text text-muted">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                      </svg>
+                      Al crear el usuario, también se registrará como {{ usuarioForm.rol?.nombreRol }}
+                    </small>
+                  }
+                </div>
+                <!-- Estado -->
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Estado</label>
+                  <select class="form-select" [(ngModel)]="usuarioForm.estado" name="estado">
+                    <option [value]="1">Activo</option>
+                    <option [value]="0">Inactivo</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+            <button type="button" class="btn btn-club-primary" (click)="saveUsuario()" [disabled]="loading">
+              @if (loading) {
+                <span class="spinner-border spinner-border-sm me-1"></span>
+              }
+              {{ isEditing ? 'Actualizar' : 'Crear' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal Ver Detalles Usuario -->
+  @if (showDetailsModal && selectedUsuario) {
+    <div class="modal-backdrop fade show"></div>
+    <div class="modal fade show d-block" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header bg-club-primary text-white">
+            <h5 class="modal-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+              </svg>
+              Detalles del Usuario
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeDetailsModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <!-- Información General -->
+              <div class="col-12 mb-3">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="user-avatar me-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 class="mb-0">{{ getNombreCompleto(selectedUsuario) }}</h4>
+                    <span class="text-muted">{{ '@' + selectedUsuario.username }}</span>
+                  </div>
+                  <div class="ms-auto">
+                    <span [class]="selectedUsuario.estado === '1' ? 'badge bg-success fs-6' : 'badge bg-danger fs-6'">
+                      {{ getEstadoTexto(selectedUsuario.estado) }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Datos personales -->
+              <div class="col-md-6">
+                <div class="card mb-3">
+                  <div class="card-header bg-light">
+                    <strong>Información Personal</strong>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-2">
+                      <small class="text-muted">ID Usuario</small>
+                      <p class="mb-0 fw-semibold">#{{ selectedUsuario.idUsuario }}</p>
+                    </div>
+                    <div class="mb-2">
+                      <small class="text-muted">Primer Nombre</small>
+                      <p class="mb-0">{{ selectedUsuario.nombre1 }}</p>
+                    </div>
+                    @if (selectedUsuario.nombre2) {
+                      <div class="mb-2">
+                        <small class="text-muted">Segundo Nombre</small>
+                        <p class="mb-0">{{ selectedUsuario.nombre2 }}</p>
+                      </div>
+                    }
+                    <div class="mb-2">
+                      <small class="text-muted">Apellido Paterno</small>
+                      <p class="mb-0">{{ selectedUsuario.apellidoPaterno }}</p>
+                    </div>
+                    @if (selectedUsuario.apellidoMaterno) {
+                      <div class="mb-2">
+                        <small class="text-muted">Apellido Materno</small>
+                        <p class="mb-0">{{ selectedUsuario.apellidoMaterno }}</p>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Datos de cuenta -->
+              <div class="col-md-6">
+                <div class="card mb-3">
+                  <div class="card-header bg-light">
+                    <strong>Información de Cuenta</strong>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-2">
+                      <small class="text-muted">Usuario</small>
+                      <p class="mb-0">{{ selectedUsuario.username }}</p>
+                    </div>
+                    <div class="mb-2">
+                      <small class="text-muted">Correo Electrónico</small>
+                      <p class="mb-0">
+                        <a [href]="'mailto:' + selectedUsuario.correo">{{ selectedUsuario.correo }}</a>
+                      </p>
+                    </div>
+                    <div class="mb-2">
+                      <small class="text-muted">Rol</small>
+                      <p class="mb-0">
+                        <span class="badge" [ngClass]="getRolBadgeClass(selectedUsuario.rol || selectedUsuario.nombreRol)">
+                          {{ selectedUsuario.rol || selectedUsuario.nombreRol }}
+                        </span>
+                      </p>
+                    </div>
+                    <div class="mb-0">
+                      <small class="text-muted">Estado</small>
+                      <p class="mb-0">
+                        <span [class]="selectedUsuario.estado === '1' ? 'badge bg-success' : 'badge bg-danger'">
+                          {{ getEstadoTexto(selectedUsuario.estado) }}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Info de rol -->
+              <div class="col-12">
+                <div class="alert alert-info mb-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="me-2" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+                  @switch (selectedUsuario.rol || selectedUsuario.nombreRol) {
+                    @case ('ADMIN') {
+                      Este usuario tiene permisos de <strong>Administrador</strong>. Puede gestionar usuarios, cajeros, clientes y configuraciones del sistema.
+                    }
+                    @case ('CAJERO') {
+                      Este usuario es un <strong>Cajero</strong>. Puede registrar ventas, acumular puntos y gestionar canjes de clientes.
+                    }
+                    @case ('CLIENTE') {
+                      Este usuario es un <strong>Cliente</strong>. Puede ver su saldo de puntos, historial de transacciones y beneficios disponibles.
+                    }
+                    @default {
+                      Rol no especificado.
+                    }
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" (click)="editFromDetails()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="me-1" viewBox="0 0 16 16">
+                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+              </svg>
+              Editar
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Cerrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</app-dashboard-layout>

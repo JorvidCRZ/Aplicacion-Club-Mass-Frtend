@@ -1,0 +1,86 @@
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  color: var(--club-primary);
+  margin: 0;
+}
+
+.puntos-display {
+  background-color: var(--club-secondary);
+  color: var(--club-white);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.puntos-label {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.puntos-valor {
+  display: block;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--club-accent);
+}
+
+.puntos-text {
+  font-size: 1rem;
+}
+
+.historial-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.historial-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.historial-info {
+  flex: 1;
+}
+
+.historial-info .fecha {
+  display: block;
+  font-weight: 600;
+  color: var(--club-primary);
+}
+
+.historial-info .tipo {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.historial-puntos {
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 1rem;
+}
+
+.historial-puntos.positivo {
+  color: #28a745;
+}
+
+.historial-puntos.negativo {
+  color: #dc3545;
+}
+
+.ver-detalles {
+  color: var(--club-accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.ver-detalles:hover {
+  text-decoration: underline;
+}

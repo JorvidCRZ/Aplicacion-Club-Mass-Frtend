@@ -1,0 +1,44 @@
+.club-footer {
+  background-color: var(--club-primary);
+  color: var(--club-white);
+  padding: 1rem 2rem;
+  margin-top: auto;
+  border-top: 2px solid var(--club-accent);
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--club-accent);
+}
+
+.footer-tagline {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.footer-info {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 576px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+}

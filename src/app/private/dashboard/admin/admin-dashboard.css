@@ -1,0 +1,147 @@
+/* Dashboard Layout */
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--club-light-gray);
+}
+
+.dashboard-content {
+  margin-left: 250px;
+  flex: 1;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content > app-footer {
+  margin-top: auto;
+}
+
+/* Header */
+.dashboard-header {
+  background-color: var(--club-primary);
+  color: var(--club-white);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.user-badge {
+  background-color: var(--club-accent);
+  color: var(--club-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--club-secondary) 0%, var(--club-primary) 100%);
+  color: var(--club-white);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome-content {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.role-icon {
+  width: 60px;
+  height: 60px;
+  background-color: rgba(255, 193, 7, 0.15);
+  border: 2px solid var(--club-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--club-accent);
+}
+
+.role-badge {
+  background-color: var(--club-accent);
+  color: var(--club-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.welcome-text h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.welcome-text p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.dash-card {
+  background-color: var(--club-white);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.dash-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: var(--club-accent);
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  background-color: var(--club-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icon i {
+  font-size: 1.5rem;
+  color: var(--club-accent);
+}
+
+.card-info h5 {
+  margin: 0 0 0.25rem 0;
+  color: var(--club-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.card-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.875rem;
+}

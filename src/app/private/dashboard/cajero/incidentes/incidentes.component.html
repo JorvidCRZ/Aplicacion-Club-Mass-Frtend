@@ -1,0 +1,110 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Gestión de Incidencias</h2>
+  </div>
+
+  <div class="card card-club mb-3">
+    <div class="card-body">
+      <form class="row g-2 align-items-end" (ngSubmit)="agregarIncidente()">
+        <div class="col-md-3">
+          <input class="form-control" [(ngModel)]="nuevo.cliente" name="cliente" placeholder="Cliente" required />
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" [(ngModel)]="nuevo.tipo" name="tipo" required>
+            <option value="">Tipo</option>
+            <option>Reclamo</option>
+            <option>Pregunta</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" [(ngModel)]="nuevo.descripcion" name="descripcion" placeholder="Descripción" required />
+        </div>
+        <div class="col-md-2">
+          <select class="form-select" [(ngModel)]="nuevo.estado" name="estado">
+            <option>Pendiente</option>
+            <option>En curso</option>
+            <option>Resuelto</option>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-success w-100" type="submit"><i class="bi bi-plus-lg"></i></button>
+        </div>
+          <div class="col-md-1">
+            <button class="btn btn-club-primary" style="width: 100%; height: 36px;">
+              <i class="bi bi-search"></i> Filtrar
+            </button>
+          </div>
+      </form>
+      <div *ngIf="mensaje" class="alert alert-success mt-2">{{ mensaje }}</div>
+    </div>
+  </div>
+
+  <div class="card card-club">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-club">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Tipo</th>
+              <th>Descripción</th>
+              <th>Estado</th>
+              <th>Fecha</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let incidente of incidentes">
+              <ng-container *ngIf="editando?.id !== incidente.id; else editForm">
+                <td>{{ incidente.cliente }}</td>
+                <td>{{ incidente.tipo }}</td>
+                <td>{{ incidente.descripcion }}</td>
+                <td>
+                  <span class="badge" [ngClass]="getEstadoClass(incidente.estado)">
+                    {{ incidente.estado }}
+                  </span>
+                </td>
+                <td>{{ incidente.fecha }}</td>
+                <td>
+                  <button class="btn btn-sm btn-outline-primary me-1" (click)="editarIncidente(incidente)">
+                    <i class="bi bi-pencil"></i> Editar
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="eliminarIncidente(incidente.id)">
+                    <i class="bi bi-trash"></i> Eliminar
+                  </button>
+                </td>
+              </ng-container>
+              <ng-template #editForm>
+                <td><input class="form-control form-control-sm" [(ngModel)]="editando!.cliente" /></td>
+                <td>
+                  <select class="form-select form-select-sm" [(ngModel)]="editando!.tipo">
+                    <option>Reclamo</option>
+                    <option>Pregunta</option>
+                  </select>
+                </td>
+                <td><input class="form-control form-control-sm" [(ngModel)]="editando!.descripcion" /></td>
+                <td>
+                  <select class="form-select form-select-sm" [(ngModel)]="editando!.estado">
+                    <option>Pendiente</option>
+                    <option>En curso</option>
+                    <option>Resuelto</option>
+                  </select>
+                </td>
+                <td>{{ editando!.fecha }}</td>
+                <td>
+                  <button class="btn btn-success btn-sm me-1" (click)="guardarEdicion()">
+                    <i class="bi bi-check-lg"></i> Guardar
+                  </button>
+                  <button class="btn btn-secondary btn-sm" (click)="cancelarEdicion()">
+                    <i class="bi bi-x-lg"></i> Cancelar
+                  </button>
+                </td>
+              </ng-template>
+            </tr>
+            <tr *ngIf="incidentes.length === 0"><td colspan="6" class="text-center text-muted">Sin incidencias</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</app-dashboard-layout>

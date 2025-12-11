@@ -1,0 +1,11 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+  color: #0d1b4c;
+  margin: 0;
+}

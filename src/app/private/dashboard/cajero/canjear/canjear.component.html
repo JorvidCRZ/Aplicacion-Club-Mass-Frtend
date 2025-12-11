@@ -1,0 +1,96 @@
+<app-dashboard-layout>
+  <div class="page-header">
+    <h2>Canjear Puntos</h2>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="input-group">
+        <input type="text" class="form-control" [(ngModel)]="codigoCliente" placeholder="Código de cliente">
+        <button class="btn btn-club-primary" (click)="buscarCliente()">
+          <i class="bi bi-search"></i> Buscar
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  @if (cliente) {
+    <div class="row">
+      <div class="col-12 mb-4">
+        <div class="alert alert-info d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ cliente.nombre }}</strong> - Puntos disponibles: <strong>{{ cliente.puntos }}</strong>
+          </div>
+        </div>
+        <div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
+      </div>
+
+      @for (premio of premios; track premio.id) {
+        <div class="col-md-3 mb-3">
+          <div class="card premio-card" 
+               [class.disabled]="cliente.puntos < premio.puntos"
+               [class.selected]="premioSeleccionado?.id === premio.id"
+               (click)="seleccionarPremio(premio)">
+            <div class="premio-imagen">
+              <i class="bi bi-gift"></i>
+            </div>
+            <div class="card-body text-center">
+              <h6 class="card-title">{{ premio.nombre }}</h6>
+              <p class="puntos mb-0">
+                Canjear por<br>
+                <strong>{{ premio.puntos }} puntos</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card card-club">
+          <div class="card-header">
+            <i class="bi bi-clock-history"></i> Historial de canjes
+          </div>
+          <div class="card-body p-2">
+            <table class="table table-sm mb-0">
+              <thead>
+                <tr><th>Fecha</th><th>Premio</th><th>Puntos</th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let canje of historialCanjes">
+                  <td>{{ canje.fecha }}</td>
+                  <td>{{ canje.premio }}</td>
+                  <td>-{{ canje.puntos }}</td>
+                </tr>
+                <tr *ngIf="historialCanjes.length === 0"><td colspan="3" class="text-center text-muted">Sin canjes</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de confirmación -->
+  @if (premioSeleccionado) {
+    <div class="canje-modal">
+      <div class="canje-modal-content">
+        <div class="canje-success">
+          <i class="bi bi-check-circle"></i>
+          <h4>Canje exitoso</h4>
+          <p>{{ premioSeleccionado.nombre }}</p>
+          <button class="btn btn-club-primary" (click)="confirmarCanje()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (cliente) {
+    <div class="mt-4 text-center">
+      <button class="btn btn-club-secondary">
+        <i class="bi bi-arrow-right"></i> Siguiente
+      </button>
+    </div>
+  }
+</app-dashboard-layout>

@@ -1,0 +1,151 @@
+
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+:root {
+  /* Colores Club Mass */
+  --club-primary: #0d1b4c;       /* Azul oscuro principal */
+  --club-secondary: #1a2d6d;     /* Azul medio */
+  --club-accent: #ffc107;        /* Amarillo/Dorado */
+  --club-white: #ffffff;
+  --club-light-gray: #f5f5f5;
+  --club-text: #333333;
+  
+  --sidebar-width: 250px;
+  --sidebar-bg: #0d1b4c;
+  --sidebar-color: #fff;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--club-light-gray);
+}
+
+/* Layout con sidebar */
+.main-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  padding: 1.5rem;
+  background-color: var(--club-light-gray);
+}
+
+/* Botones Club Mass */
+.btn-club-primary {
+  background-color: var(--club-accent);
+  border-color: var(--club-accent);
+  color: var(--club-primary);
+  font-weight: 600;
+}
+
+.btn-club-primary:hover {
+  background-color: #e5ac00;
+  border-color: #e5ac00;
+  color: var(--club-primary);
+}
+
+.btn-club-secondary {
+  background-color: var(--club-primary);
+  border-color: var(--club-primary);
+  color: var(--club-white);
+}
+
+.btn-club-secondary:hover {
+  background-color: var(--club-secondary);
+  border-color: var(--club-secondary);
+  color: var(--club-white);
+}
+
+/* Cards Club Mass */
+.card-club {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-club .card-header {
+  background-color: var(--club-primary);
+  color: var(--club-white);
+  font-weight: 600;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+/* Header/Navbar Club Mass */
+.navbar-club {
+  background-color: var(--club-primary);
+  color: var(--club-white);
+}
+
+/* Badges */
+.badge-club {
+  background-color: var(--club-accent);
+  color: var(--club-primary);
+  font-weight: 600;
+}
+
+/* Puntos display */
+.puntos-display {
+  background-color: var(--club-secondary);
+  color: var(--club-white);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+}
+
+.puntos-display .puntos-valor {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--club-accent);
+}
+
+/* Tables Club Mass */
+.table-club thead {
+  background-color: var(--club-primary);
+  color: var(--club-white);
+}
+
+/* Forms */
+.form-control:focus {
+  border-color: var(--club-accent);
+  box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25);
+}
+
+/* Status badges */
+.status-pendiente {
+  background-color: var(--club-accent);
+  color: #000;
+}
+
+.status-resuelto {
+  background-color: #28a745;
+  color: var(--club-white);
+}
+
+.status-encurso {
+  background-color: #17a2b8;
+  color: var(--club-white);
+}
+
+/* SVG en sidebar y áreas oscuras - color blanco/claro */
+.sidebar svg,
+.sidebar-nav svg,
+.welcome-banner svg,
+.dashboard-header svg,
+.role-icon svg,.card-icon svg {
+  fill: var(--club-light-gray);
+}
+
+/* SVG en botón toggle password - color oscuro */
+.btn-toggle-password svg {
+  fill: var(--club-primary);
+  color: var(--club-primary);
+}
+
+.btn-toggle-password:hover svg {
+  fill: var(--club-accent);
+  color: var(--club-accent);
+}

@@ -1,0 +1,190 @@
+/* Ajuste para botones outline en hover: fondo del color y texto blanco */
+.btn-outline-info:hover, .btn-outline-warning:hover, .btn-outline-success:hover, .btn-outline-danger:hover, .btn-outline-primary:hover {
+  color: #fff !important;
+}
+/* Dashboard Layout */
+/* Variables para botones de acciones de usuario */
+:root {
+  --usuario-btn-detalles: #007bff;   /* azul */
+  --usuario-btn-editar: #ffc107;     /* amarillo */
+  --usuario-btn-activar: #28a745;    /* verde */
+  --usuario-btn-desactivar: #ffc107; /* amarillo */
+  --usuario-btn-eliminar: #dc3545;   /* rojo */
+}
+
+/* Botones de acciones de usuario */
+.usuario-btn-detalles {
+  color: var(--usuario-btn-detalles);
+  border-color: var(--usuario-btn-detalles);
+}
+.usuario-btn-editar {
+  color: var(--usuario-btn-editar);
+  border-color: var(--usuario-btn-editar);
+}
+.usuario-btn-activar {
+  color: var(--usuario-btn-activar);
+  border-color: var(--usuario-btn-activar);
+}
+.usuario-btn-desactivar {
+  color: var(--usuario-btn-desactivar);
+  border-color: var(--usuario-btn-desactivar);
+}
+.usuario-btn-eliminar {
+  color: var(--usuario-btn-eliminar);
+  border-color: var(--usuario-btn-eliminar);
+}
+
+.usuario-btn-detalles:hover {
+  background: var(--usuario-btn-detalles);
+  color: #fff;
+}
+.usuario-btn-editar:hover {
+  background: var(--usuario-btn-editar);
+  color: #fff;
+}
+.usuario-btn-activar:hover {
+  background: var(--usuario-btn-activar);
+  color: #fff;
+}
+.usuario-btn-desactivar:hover {
+  background: var(--usuario-btn-desactivar);
+  color: #fff;
+}
+.usuario-btn-eliminar:hover {
+  background: var(--usuario-btn-eliminar);
+  color: #fff;
+}
+}
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--club-light-gray);
+}
+
+.dashboard-content {
+  margin-left: 250px;
+  flex: 1;
+  padding: 0;
+}
+
+/* Header */
+.dashboard-header {
+  background-color: var(--club-primary);
+  color: var(--club-white);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.user-badge {
+  background-color: var(--club-accent);
+  color: var(--club-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+  background: linear-gradient(135deg, var(--club-secondary) 0%, var(--club-primary) 100%);
+  color: var(--club-white);
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.welcome-text h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.welcome-text p {
+  margin: 0;
+  opacity: 0.8;
+}
+
+.points-display {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.points-label {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.points-value {
+  display: block;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--club-accent);
+}
+
+/* Dashboard Cards */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.dash-card {
+  background-color: var(--club-white);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.dash-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: var(--club-accent);
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  background-color: var(--club-primary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.card-icon i {
+  font-size: 1.5rem;
+  color: var(--club-accent);
+}
+
+.card-info h5 {
+  margin: 0 0 0.25rem 0;
+  color: var(--club-primary);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.card-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.875rem;
+}
