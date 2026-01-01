@@ -12,17 +12,18 @@ import { DashboardLayoutComponent } from '../../../../shared/components/dashboar
 })
 export class CatalogoClienteComponent {
   misPuntos = 0;
-  premios = [
-    { id: 1, nombre: 'Descuento 10%', puntos: 500, imagen: '' },
-    { id: 2, nombre: 'Producto Gratis', puntos: 1000, imagen: '' },
-    { id: 3, nombre: 'Gift Card S/50', puntos: 2500, imagen: '' },
-    { id: 4, nombre: 'Gift Card S/100', puntos: 5000, imagen: '' },
-  ];
+  premios: any[] = [];
   user: any;
 
   constructor(private authService: AuthService) {
     this.user = JSON.parse(localStorage.getItem('user') || '{}');
     this.cargarPuntos();
+    this.cargarPremios();
+  }
+
+  cargarPremios() {
+    const data = localStorage.getItem('clubmass_premios');
+    this.premios = data ? JSON.parse(data) : [];
   }
 
   cargarPuntos() {
